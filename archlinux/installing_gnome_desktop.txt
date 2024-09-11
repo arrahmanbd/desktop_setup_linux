@@ -1,0 +1,25 @@
+# GUI installation
+pacman -S xorg-server xorg-xinit
+
+# Minimal gnome installation
+pacman -S gnome-shell nautilus gnome-terminal gnome-system-monitor gnome-tweaks gnome-control-center xdg-user-dirs gdm
+# or full
+sudo pacman -S gnome
+sudo systemctl enable gdm.service
+###################################
+# If you want to use a graphical user login
+systemctl start gdm
+systemctl enable gdm # If everything works fine, to use gdm automatically
+
+# Install NetworkManager
+# Gnome-keyring is needed to store the wifi passwords encrypted
+sudo pacman -Sy networkmanager gnome-keyring
+sudo systemctl start NetworkManager
+sudo systemctl enable NetworkManager
+
+# Install Firefox
+sudo pacman -Sy firefox
+
+# Screen sharing in the browsers may not work if you use Wayland. To fix this install:
+sudo pacman -Sy xdg-desktop-portal xdg-desktop-portal-gnome
+# Firefox supports this by default, for Chromium you need to enable the flag chrome://flags/#enable-webrtc-pipewire-capturer

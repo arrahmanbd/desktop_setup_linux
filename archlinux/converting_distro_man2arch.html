@@ -1,0 +1,331 @@
+<div class="crayons-article__main">
+
+          <div class="crayons-article__body text-styles spec__body" data-article-id="403820" id="article-body">
+            <h1>
+  <a name="manjaro-to-arch-conversation" href="#manjaro-to-arch-conversation" class="anchor">
+  </a>
+  Manjaro To Arch Conversation
+</h1>
+
+<p>Manjaro is one of the most popular Linux distro, no confusion here. Its easy installation process, supportive hardware with easy Arching makes it so much popular. Manjaro is the best choice for those beginners who wants to use Arch in any way. But there's some annoyance about Manjaro too. Manjaro is not as bleeding edge as Arch&hairsp;-&hairsp;holds back the update for some time, often breaks by switching DE, and a little bit bloated. So, users may later want to switch over to arch, but still fears the hassle of Arch Installation Process. This is a guide for those who want to install arch with less hassle or wants to switch over to Arch from Manjaro.</p>
+
+<h2>
+  <a name="step-1-changing-the-pacman-configuration" href="#step-1-changing-the-pacman-configuration" class="anchor">
+  </a>
+  Step 1: Changing the Pacman Configuration
+</h2>
+
+<p>Pacman, using libalpm, will attempt to read pacman.conf each time it is invoked. This configuration file is divided into sections or repositories. Each section defines a package repository that Pacman can use when searching for packages in&hairsp;-&hairsp;sync mode. The exception to this is the options section, which defines global options.<br>
+First, create a backup of your pacman.conf file by<br>
+<code>sudo cp /etc/pacman.conf /etc/pacman.conf.bak</code><br>
+and then change your <code>/etc/pacman.conf</code> as below.<br>
+</p>
+
+<div class="highlight js-code-highlight">
+<pre class="highlight plaintext"><code>#
+# /etc/pacman.conf
+#
+# See the pacman.conf(5) manpage for option and repository directives
+
+#
+# GENERAL OPTIONS
+#
+[options]
+# The following paths are commented out with their default values listed.
+# If you wish to use different paths, uncomment and update the paths.
+#RootDir     = /
+#DBPath      = /var/lib/pacman/
+CacheDir = /var/cache/pacman/pkg/
+#LogFile     = /var/log/pacman.log
+#GPGDir      = /etc/pacman.d/gnupg/
+#HookDir     = /etc/pacman.d/hooks/
+HoldPkg      = pacman glibc
+# If upgrades are available for these packages they will be asked for first
+# SyncFirst    = manjaro-system archlinux-keyring manjaro-keyring
+#XferCommand = /usr/bin/curl -C - -f %u &gt; %o
+#XferCommand = /usr/bin/wget --passive-ftp -c -O %o %u
+#CleanMethod = KeepInstalled
+#UseDelta    = 0.7
+Architecture = auto
+
+# Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
+#IgnorePkg   =
+#IgnoreGroup =
+
+#NoUpgrade   =
+#NoExtract   =
+
+# Misc options
+#UseSyslog
+Color
+#TotalDownload
+# We cannot check disk space from within a chroot environment
+CheckSpace
+#VerbosePkgLists
+
+# By default, pacman accepts packages signed by keys that its local keyring
+# trusts (see pacman-key and its man page), as well as unsigned packages.
+SigLevel    = Never
+LocalFileSigLevel = Optional
+#RemoteFileSigLevel = Required
+
+# NOTE: You must run `pacman-key --init` before first using pacman; the local
+# keyring can then be populated with the keys of all official Manjaro Linux
+# packagers with `pacman-key --populate archlinux manjaro`.
+
+#
+# REPOSITORIES
+#   - can be defined here or included from another file
+#   - pacman will search repositories in the order defined here
+#   - local/custom mirrors can be added here or in separate files
+#   - repositories listed first will take precedence when packages
+#     have identical names, regardless of version number
+#   - URLs will have $repo replaced by the name of the current repo
+#   - URLs will have $arch replaced by the name of the architecture
+#
+# Repository entries are of the format:
+#       [repo-name]
+#       Server = ServerName
+#       Include = IncludePath
+#
+# The header [repo-name] is crucial - it must be present and
+# uncommented to enable the repo.
+#
+
+# The testing repositories are disabled by default. To enable, uncomment the
+# repo name header and Include lines. You can add preferred servers immediately
+# after the header, and they will be used before the default mirrors.
+
+[core]
+SigLevel = PackageRequired
+Include = /etc/pacman.d/mirrorlist
+
+[extra]
+SigLevel = PackageRequired
+Include = /etc/pacman.d/mirrorlist
+
+[community]
+SigLevel = PackageRequired
+Include = /etc/pacman.d/mirrorlist
+
+# If you want to run 32 bit applications on your x86_64 system,
+# enable the multilib repositories as required here.
+
+[multilib]
+SigLevel = PackageRequired
+Include = /etc/pacman.d/mirrorlist
+
+# An example of a custom package repository.  See the pacman manpage for
+# tips on creating your own repositories.
+#[custom]
+#SigLevel = Optional TrustAll
+#Server = file:///home/custompkgs
+
+</code></pre>
+<div class="highlight__panel js-actions-panel">
+<div class="highlight__panel-action js-fullscreen-code-action">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-on"><title>Enter fullscreen mode</title>
+    <path d="M16 3h6v6h-2V5h-4V3zM2 3h6v2H4v4H2V3zm18 16v-4h2v6h-6v-2h4zM4 19h4v2H2v-6h2v4z"></path>
+</svg>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-off"><title>Exit fullscreen mode</title>
+    <path d="M18 7h4v2h-6V3h2v4zM8 9H2V7h4V3h2v6zm10 8v4h-2v-6h6v2h-4zM8 15v6H6v-4H2v-2h6z"></path>
+</svg>
+
+</div>
+</div>
+</div>
+
+
+
+<h2>
+  <a name="step-2-change-your-mirrors" href="#step-2-change-your-mirrors" class="anchor">
+  </a>
+  Step 2: Change Your Mirrors
+</h2>
+
+<p>Go to the Pacman Mirrorlist Generator, select your country and hit the Generate button. And then paste generated lines in your /etc/pacman.d/mirrolist file. It will look like this-<br>
+</p>
+
+<div class="highlight js-code-highlight">
+<pre class="highlight plaintext"><code># Arch Linux repository mirror list
+# Generated on 2019–11–26
+# Please use 'pacman-mirrors -id' To reset custom mirrorlist
+# Please use 'pacman-mirrors -c all' To reset custom mirrorlist
+# To remove custom config run 'pacman-mirrors -c all'
+# Bangladesh
+Server = http://mirror.xeonbd.com/archlinux/$repo/os/$arch
+# India
+Server = http://mirror.cse.iitk.ac.in/archlinux/$repo/os/$arch
+Server = https://ind.mirror.pkgbuild.com/$repo/os/$arch
+</code></pre>
+<div class="highlight__panel js-actions-panel">
+<div class="highlight__panel-action js-fullscreen-code-action">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-on"><title>Enter fullscreen mode</title>
+    <path d="M16 3h6v6h-2V5h-4V3zM2 3h6v2H4v4H2V3zm18 16v-4h2v6h-6v-2h4zM4 19h4v2H2v-6h2v4z"></path>
+</svg>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-off"><title>Exit fullscreen mode</title>
+    <path d="M18 7h4v2h-6V3h2v4zM8 9H2V7h4V3h2v6zm10 8v4h-2v-6h6v2h-4zM8 15v6H6v-4H2v-2h6z"></path>
+</svg>
+
+</div>
+</div>
+</div>
+
+
+
+<h2>
+  <a name="step-3-change-manjaro-related-etc-files" href="#step-3-change-manjaro-related-etc-files" class="anchor">
+  </a>
+  Step 3: Change Manjaro Related ETC files
+</h2>
+
+<p>Etc usually contains the configuration files for all the programs that run on your Linux/Unix system.</p>
+
+<h3>
+  <a name="a-remove-manjaro-release-file" href="#a-remove-manjaro-release-file" class="anchor">
+  </a>
+  a) Remove Manjaro Release file
+</h3>
+
+<p><code>sudo cp /etc/manjaro-release /etc/manjaro-release.bak</code><br>
+And then Uninstall Manjaro Release file by<br>
+<code>sudo pacman -Rns manjaro-release</code></p>
+<h3>
+  <a name="b-backing-up-pacmanmirrorsconf" href="#b-backing-up-pacmanmirrorsconf" class="anchor">
+  </a>
+  b) Backing Up pacman-mirrors.conf
+</h3>
+
+<p><code>sudo mv /etc/pacman-mirrors.conf /etc/pacman-mirrors.conf.bak</code></p>
+<h3>
+  <a name="c-change-osrelease-file" href="#c-change-osrelease-file" class="anchor">
+  </a>
+  c) Change os-release file
+</h3>
+
+<p>The os-release file contains the necessary information for operating system identification. It is set by the operating system vendor. Change <code>/etc/os-release</code> file like below:<br>
+</p>
+
+<div class="highlight js-code-highlight">
+<pre class="highlight plaintext"><code>NAME="Arch Linux"
+PRETTY_NAME="Arch Linux"
+ID=arch
+BUILD_ID=rolling
+ANSI_COLOR="20;2;20;222;202"
+HOME_URL="https://www.archlinux.org/"
+DOCUMENTATION_URL="https://wiki.archlinux.org/"
+SUPPORT_URL="https://bbs.archlinux.org/"
+BUG_REPORT_URL="https://bugs.archlinux.org/"
+LOGO=archlinux
+</code></pre>
+<div class="highlight__panel js-actions-panel">
+<div class="highlight__panel-action js-fullscreen-code-action">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-on"><title>Enter fullscreen mode</title>
+    <path d="M16 3h6v6h-2V5h-4V3zM2 3h6v2H4v4H2V3zm18 16v-4h2v6h-6v-2h4zM4 19h4v2H2v-6h2v4z"></path>
+</svg>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-off"><title>Exit fullscreen mode</title>
+    <path d="M18 7h4v2h-6V3h2v4zM8 9H2V7h4V3h2v6zm10 8v4h-2v-6h6v2h-4zM8 15v6H6v-4H2v-2h6z"></path>
+</svg>
+
+</div>
+</div>
+</div>
+
+
+
+<h3>
+  <a name="d-change-the-issue-file" href="#d-change-the-issue-file" class="anchor">
+  </a>
+  d) Change the issue file
+</h3>
+
+<p>The file /etc/issue is a text file which contains a message or system identification to be printed before the login prompt. Change the /etc/issue file like below:<br>
+</p>
+
+<div class="highlight js-code-highlight">
+<pre class="highlight plaintext"><code>Arch Linux \r (\l)
+</code></pre>
+<div class="highlight__panel js-actions-panel">
+<div class="highlight__panel-action js-fullscreen-code-action">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-on"><title>Enter fullscreen mode</title>
+    <path d="M16 3h6v6h-2V5h-4V3zM2 3h6v2H4v4H2V3zm18 16v-4h2v6h-6v-2h4zM4 19h4v2H2v-6h2v4z"></path>
+</svg>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-off"><title>Exit fullscreen mode</title>
+    <path d="M18 7h4v2h-6V3h2v4zM8 9H2V7h4V3h2v6zm10 8v4h-2v-6h6v2h-4zM8 15v6H6v-4H2v-2h6z"></path>
+</svg>
+
+</div>
+</div>
+</div>
+
+
+
+<h3>
+  <a name="e-change-lsbrelease-file" href="#e-change-lsbrelease-file" class="anchor">
+  </a>
+  e ) Change lsb-release file
+</h3>
+
+<p>Change <code>/etc/lsb-release</code> file like below<br>
+</p>
+
+<div class="highlight js-code-highlight">
+<pre class="highlight plaintext"><code>LSB_VERSION=1.4
+DISTRIB_ID=Arch
+DISTRIB_RELEASE=rolling
+DISTRIB_DESCRIPTION="Arch Linux"
+</code></pre>
+<div class="highlight__panel js-actions-panel">
+<div class="highlight__panel-action js-fullscreen-code-action">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-on"><title>Enter fullscreen mode</title>
+    <path d="M16 3h6v6h-2V5h-4V3zM2 3h6v2H4v4H2V3zm18 16v-4h2v6h-6v-2h4zM4 19h4v2H2v-6h2v4z"></path>
+</svg>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-off"><title>Exit fullscreen mode</title>
+    <path d="M18 7h4v2h-6V3h2v4zM8 9H2V7h4V3h2v6zm10 8v4h-2v-6h6v2h-4zM8 15v6H6v-4H2v-2h6z"></path>
+</svg>
+
+</div>
+</div>
+</div>
+
+
+
+<h2>
+  <a name="step-4-do-an-update" href="#step-4-do-an-update" class="anchor">
+  </a>
+  Step 4: Do an update
+</h2>
+
+<p>Do an update by running <code>sudo pacman -Syyu</code> and if it asks to replace any packages do so.&nbsp;and install some packages like pacman, systemd, your DE again by running  <code>sudo pacman -S &lt;package name&gt;</code>.</p>
+
+<h2>
+  <a name="step-5-install-and-uninstall-some-packages" href="#step-5-install-and-uninstall-some-packages" class="anchor">
+  </a>
+  Step 5: Install and Uninstall Some Packages
+</h2>
+
+<p>Install kernel and other necessary packages by running<br>
+<code>sudo pacman -Scc &amp;&amp; sudo pacman -S linux-lts linux-lts-headers acpi_call-dkms tlp pacman-mirrors grub</code><br>
+Uninstall all the packages related to Manjaro, such as Manjaro alsa and others. And reinstall some of the removed dependency, like installing <code>pulseaudio</code> and <code>alsa-lib</code> again. </p>
+
+<h2>
+  <a name="step-6-bug-fixing" href="#step-6-bug-fixing" class="anchor">
+  </a>
+  Step 6: Bug fixing
+</h2>
+
+<p>Run <code>sudo tlp usb</code> to stop mouse freezing.<br>
+Open   <code>/etc/default/grub</code> file and change the <code>GRUB_DISTRIBUTION</code> to <code>"Arch"</code> and <code>update-grub</code> by running<br>
+<code>sudo grub-mkconfig -o /boot/grub/grub.cfg</code><br>
+Restart your computer and you will find that your computer is running Arch now. Let people know that you are now a ARCH USER.<br>
+If you face any problems, please let me know.</p>
+
+
+          </div>
+
+        </div>

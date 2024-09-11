@@ -1,0 +1,26 @@
+ 
+sudo pacman -S zsh
+echo $SHELL
+sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+git clone https://github.com/agkozak/zsh-z $ZSH_CUSTOM/plugins/zsh-z
+
+plugins=(
+    fzf
+    git
+    history-substring-search
+    colored-man-pages
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    zsh-z
+)
+
+//test color spectrum_ls
+
+change shell
+chsh -s /bin/zsh
+copy all bash alias

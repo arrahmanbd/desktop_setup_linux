@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Commands Cheat Sheet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #007bff;
+        }
+        pre {
+            background: #fff;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+        }
+        code {
+            background: #f1f1f1;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Git Commands Cheat Sheet</h1>
+    
+    <h2>Table of Contents</h2>
+    <ul>
+        <li><a href="#setup-git-user-information">Setup Git User Information</a></li>
+        <li><a href="#enable-credential-storage">Enable Credential Storage</a></li>
+        <li><a href="#basic-git-commands">Basic Git Commands</a>
+            <ul>
+                <li><a href="#clone-a-repository">Clone a Repository</a></li>
+                <li><a href="#pull-latest-changes">Pull Latest Changes</a></li>
+                <li><a href="#initialize-a-new-local-repository">Initialize a New Local Repository</a></li>
+                <li><a href="#stage-changes">Stage Changes</a></li>
+                <li><a href="#check-status">Check Status</a></li>
+                <li><a href="#commit-changes">Commit Changes</a></li>
+                <li><a href="#push-changes">Push Changes</a></li>
+                <li><a href="#increase-post-buffer-size-for-large-pushes">Increase Post Buffer Size for Large Pushes</a></li>
+                <li><a href="#unset-post-buffer-size-if-needed">Unset Post Buffer Size (If Needed)</a></li>
+                <li><a href="#save-credentials">Save Credentials</a></li>
+            </ul>
+        </li>
+        <li><a href="#handling-large-files">Handling Large Files</a>
+            <ul>
+                <li><a href="#install-git-lfs-large-file-storage">Install Git LFS (Large File Storage)</a></li>
+                <li><a href="#track-large-files">Track Large Files</a></li>
+                <li><a href="#commit-and-push-large-files">Commit and Push Large Files</a></li>
+            </ul>
+        </li>
+        <li><a href="#working-with-branches">Working with Branches</a>
+            <ul>
+                <li><a href="#create-a-new-branch">Create a New Branch</a></li>
+                <li><a href="#create-and-switch-to-a-new-branch">Create and Switch to a New Branch</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2 id="setup-git-user-information">Setup Git User Information</h2>
+    <p>Configure your Git user name and email globally:</p>
+    <pre><code>git config --global user.name "arrahmanbd"
+git config --global user.email "arrahman@mail.com"</code></pre>
+
+    <h2 id="enable-credential-storage">Enable Credential Storage</h2>
+    <p>To save your Git credentials for future use:</p>
+    <pre><code>git config --global credential.helper store</code></pre>
+    <p><strong>Note:</strong> When cloning a repository or performing other Git operations, use a token instead of a password. The credential will be saved automatically.</p>
+
+    <h2 id="basic-git-commands">Basic Git Commands</h2>
+    
+    <h3 id="clone-a-repository">Clone a Repository</h3>
+    <p>Clone a repository to your local machine:</p>
+    <pre><code>git clone http://example.com/repo.git</code></pre>
+
+    <h3 id="pull-latest-changes">Pull Latest Changes</h3>
+    <p>Fetch and merge changes from the remote repository:</p>
+    <pre><code>git pull</code></pre>
+
+    <h3 id="initialize-a-new-local-repository">Initialize a New Local Repository</h3>
+    <p>Start a new Git repository in the current directory:</p>
+    <pre><code>git init</code></pre>
+
+    <h3 id="stage-changes">Stage Changes</h3>
+    <p>Add changes to the staging area:</p>
+    <pre><code>git add .</code></pre>
+    <p>Or add a specific file:</p>
+    <pre><code>git add fileName.txt</code></pre>
+
+    <h3 id="check-status">Check Status</h3>
+    <p>View the current status of your repository:</p>
+    <pre><code>git status</code></pre>
+    <p>View commit history in a compact format:</p>
+    <pre><code>git log --oneline</code></pre>
+
+    <h3 id="commit-changes">Commit Changes</h3>
+    <p>Commit your staged changes with a message:</p>
+    <pre><code>git commit -m "Your commit message"</code></pre>
+
+    <h3 id="push-changes">Push Changes</h3>
+    <p>Push your local commits to the remote repository:</p>
+    <pre><code>git push origin master</code></pre>
+
+    <h3 id="increase-post-buffer-size-for-large-pushes">Increase Post Buffer Size for Large Pushes</h3>
+    <p>If you encounter errors with large pushes, increase the buffer size:</p>
+    <pre><code>git config http.postBuffer 524288000</code></pre>
+
+    <h3 id="unset-post-buffer-size-if-needed">Unset Post Buffer Size (If Needed)</h3>
+    <p>To revert the buffer size change:</p>
+    <pre><code>git config --global --unset http.postBuffer</code></pre>
+
+    <h3 id="save-credentials">Save Credentials</h3>
+    <p>Your credentials are stored in:</p>
+    <pre><code>~/.git-credentials</code></pre>
+
+    <h2 id="handling-large-files">Handling Large Files</h2>
+    
+    <h3 id="install-git-lfs-large-file-storage">Install Git LFS (Large File Storage)</h3>
+    <p>To manage large files, install Git LFS:</p>
+    <p>For Arch Linux:</p>
+    <pre><code>sudo pacman -S git-lfs</code></pre>
+
+    <h3 id="track-large-files">Track Large Files</h3>
+    <p>Track specific file types with Git LFS:</p>
+    <pre><code>git lfs track "*.fileextension"</code></pre>
+    <p>Example for PDF files:</p>
+    <pre><code>git lfs track "*.pdf"</code></pre>
+    <p>Add the file(s) to the staging area:</p>
+    <pre><code>git add fileName.pdf</code></pre>
+
+    <h3 id="commit-and-push-large-files">Commit and Push Large Files</h3>
+    <p>Commit and push your changes as usual:</p>
+    <pre><code>git commit -m "Your commit message"
+git push origin master</code></pre>
+
+    <h2 id="working-with-branches">Working with Branches</h2>
+    
+    <h3 id="create-a-new-branch">Create a New Branch</h3>
+    <p>Create a branch from a specific commit hash:</p>
+    <pre><code>git branch branch_name &lt;commit-hash&gt;</code></pre>
+    <p>Or create a branch using a symbolic reference:</p>
+    <pre><code>git branch branch_name HEAD~3</code></pre>
+
+    <h3 id="create-and-switch-to-a-new-branch">Create and Switch to a New Branch</h3>
+    <p>Create a new branch and switch to it in one command:</p>
+    <pre><code>git checkout -b branch_name &lt;commit-hash or HEAD~3&gt;</code></pre>
+
+</body>
+</html>
+

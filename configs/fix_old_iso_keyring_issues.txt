@@ -1,0 +1,7 @@
+so if none of the commands worked try this:
+open /etc/pacman.conf
+and edit this line:
+SigLevel = Required DatabaseOptional - its on the 45 line
+to look like this:
+SigLevel = Optional TrustAll
+save it and run update again

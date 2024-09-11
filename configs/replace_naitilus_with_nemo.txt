@@ -1,0 +1,37 @@
+This guide will demonstrate how to replace Nautilus with Nemo instead of Nautilus to restore desktop icon functionality in Budgie.
+##gsettings set org.nemo.desktop ignored-desktop-handlers "['budgie-helper']"
+To install Nemo, execute:
+
+pamac install nemo
+To remove Nautilus, execute:
+
+pamac remove nautilus nautilus-admin nautilus-empty-file nautilus-sendto libnautilus-extension python-nautilus
+To set Nemo as the default desktop manager:
+
+xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
+Execute:
+
+dconf 
+Navigate to org.gnome.desktop.background
+
+Scroll to the bottom of this setting
+
+Set show-desktop-icons to true
+
+Still within dconf, navigate to org.nemo.desktop and optionally set use-desktop-grid to false
+
+If use-desktop-grid is set to true, icons on the desktop cannot be reordered- *
+A trash icon can be set to appear on the desktop through the item directly above use-desktop-grid
+There are a few Nautilus related options buried in the editor - they can all be safely removed
+Open Budgie Desktop Settings
+
+Navigate to Autostart
+
+Click the + in the top right corner.
+
+Select the Add button
+
+The title/description can be set to whatever you like, but set the command to nemo-desktop
+Now restart and enjoy having a desktop with icons in Manjaro Budgie. :slight_smile:
+
+

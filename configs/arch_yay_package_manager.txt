@@ -1,0 +1,20 @@
+Installing Yay on Arch Linux
+sudo pacman -S --needed base-devel git
+//clone yay
+git clone https://aur.archlinux.org/yay.git
+cd yay
+//build
+makepkg -si
+//check
+yay --version
+//use
+yay -Syu pamac-gtk
+yay -S visual-studio-code-bin google-chrome 
+//Package manager pacman,yay
+sudo pacman -S some_package
+sudo pacman -Rns some_package
+sudo pacman -R some_pack_without_dependency
+//update
+sudo pacman -Syu
+// only aur
+yay -Sua

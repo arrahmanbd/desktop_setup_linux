@@ -1,0 +1,76 @@
+//Git set user and email
+git config --global user.name "arrahmanbd"
+git config --global user.email "example@email.com"
+
+## save enable credential
+git config --global credential.helper store
+
+[Now try using clone  a repo. instead of password use the token,
+The credential will save]
+
+//clone or local
+git clone http://......
+git pull
+
+
+#For local
+git init
+
+//Add to stage
+git add .
+or, git add fileName.txt
+
+//Git status
+
+git status
+or, git log --oneline
+//commit
+git commit -m "Hello world" 
+//Push
+git push origin master
+
+//Large push error
+git config http.postBuffer 524288000
+///My credential
+
+crediantial are saved in
+~/.git-credentials
+
+
+
+//for uploading larger fileName
+install lfs
+ "sudo pacman -S git-lfs"
+
+ //BUffer size must unset
+ git config --global --unset http.postBuffer
+ #track the file
+
+$ git lfs track “.fileextension”
+Eg: If I want to upload a pdf file, then
+$ git lfs track “.pdf”
+git add TheGuid.pdf
+or git add .
+
+??now
+
+git commit -m "commit message"
+//Push
+git push origin master
+///More commands
+
+
+Create the branch using a commit hash:
+
+git branch branch_name <commit-hash>
+
+Or by using a symbolic reference:
+
+git branch branch_name HEAD~3
+
+To checkout the branch while creating it, use:
+
+git checkout -b branch_name <commit-hash or HEAD~3>
+
+
+

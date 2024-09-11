@@ -1,0 +1,9 @@
+## Installation 
+pacman -S xorg plasma plasma-wayland-session kde-applications 
+
+## Enable network & display manager
+systemctl enable sddm.service
+systemctl enable NetworkManager.service
+
+### Dolphin in sudo
+pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY KDE_SESSION_VERSION=5 KDE_FULL_SESSION=true dolphin

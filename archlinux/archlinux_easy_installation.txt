@@ -1,0 +1,123 @@
+# Connect to network
+#########[CMD]##############
+iwctl
+device list
+station wlan0 scan
+station wlan0 get-networks
+station connect SSID
+## give pass and exit and test::
+ping google.com
+
+#########[EASY]##########
+sudo pacman -Syu
+sudo pacman -S archinstall
+archinstall
+
+##########################
+#########[PRO]###########
+lsblk
+cfdisk /dev/sdb
+
+#########################
+Partitioning Schema [if home seperated]:
+120-512MB == FAT.32 /boot/efi
+32-50GB   == ext4   /
+120GB+	  == ext4   /home
+4GB       == [swap]
+
+##########################
+System without Seperated Home
+##########################
+mkfs.fat -F 32 /dev/sdb1
+mkfs.ext4 /dev/sdb2
+mkswap /dev/sdb3
+
+#######Let's mount them#####
+mount /dev/sdb2 /mnt    [Root]
+mkdir -p /mnt/boot/efi
+mount /dev/sdb1 /mnt/boot/efi [boot]
+swapon /dev/sdb3
+
+#########Let's install########
+pacstarp /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr nano networkmanager
+## Create FSTAB
+genfstab /mnt
+genfstab /mnt > /mnt/etc/fstab
+
+#####check fstab ##########
+cat /mnt/etc/fstab
+
+
+#############################
+Accessing our System
+############################
+arch-chroot /mnt
+
+#####Localization#########
+ln -sf /usr/share/zoneinfo/UnitedState/NewYork /etc/localtime
+###Test
+hwdclock --systohc
+
+#####Local Language############
+nano /etc/locale.gen
+##Un-comment and save [CTRL+O ,CTRL+X]
+en_US.UTF-8 UTF-8
+
+##Generate
+locale-gen
+##Specify Local Language
+nano /etc/locale.conf 
+	LANG=en_US.UTF-8
+##Set HostName
+nano /etc/hostname
+	HackerOS
+	
+	
+################################
+##########[RootSetup]###########
+
+passwd
+useradd -m -G wheel -s /bin/bash [UserName: ghost/admin]
+passwd ghost
+
+##Add to sudo file
+EDITOR=nano visudo
+##Uncomment a line after 
+	root.All=(ALL:ALL)
+	%wheel All........
+#Let's switch to user [ghost]
+su ghost
+sudo pacman -Syu
+exit
+#####Now you are in root user again
+systemctl enable NetworkManager
+
+
+##################################
+########[Install BootLoader] #####
+grub-install /dev/sdb
+grub-mkconfig -o /boot/grub/grub.cfg
+
+############Success###############
+Now install GUI Desktop Environment
+sudo pacman -S xorg gnome
+sudo pacman -S kde-plasma
+
+###Enable Display Manager for LoginGUI:
+gdm,sddm
+sudo systemctl enable gdm
+
+##########################################
+######[ Reboot and Enjoy ] ###############
+##########################################
+[!] Error on GRUB?
+Os Probler issue??
+nano /etc/default/grub
+## Uncomment os probler and run grub installer again.
+## Or,
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+
+
+
+
+
