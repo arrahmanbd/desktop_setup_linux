@@ -1,0 +1,34 @@
+sudo apt update
+sudo apt install nemo
+xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
+gsettings set org.nemo.desktop show-desktop-icons true
+=gsettings set org.gnome.desktop.background show-desktop-icons false
+
+# Then also install these tools so we can adjust some settings next
+
+sudo apt install dconf-editor 
+
+# And install this on Ubuntu 18.04 or 20.04
+sudo apt install gnome-tweak-tool
+
+# Start up the nemo desktop to allow nemo to control the desktop icons too
+nemo-desktop&  # We use `&` here to run it in the background
+
+
+#Desktop icon Neo extension. 
+
+
+Make your computer open nemo whenever nautilus is run, by making a symbolic link named "nautilus" in your ~/bin folder, but have it point to nemo!:
+
+mkdir -p ~/bin  # create ~/bin dir if it doesn't exist
+# see where the executable for nautilus is; sample output: `/usr/bin/nautilus`
+which nautilus  
+# see where the executable for nemo is; sample output: `/usr/bin/nemo`
+which nemo
+# create symlink to back nautilus path up; this allows running 
+# `nautilus_real` to run the real `nautilus`!
+ln -s /usr/bin/nautilus ~/bin/nautilus_real
+# create a new `nautilus` symlink to point to `nemo`; this means
+# that if you run `nautilus` it will actually run `nemo`!
+ln -s /usr/bin/nemo ~/bin/nautilus
+
